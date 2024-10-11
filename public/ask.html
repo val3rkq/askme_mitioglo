@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ask</title>
+    <link rel="stylesheet" href="./static/app.css">
+</head>
+
+<body class="font-sans font-bold">
+    <!-- page -->
+    <div class="flex flex-col justify-between items-center h-screen w-full">
+
+        <!-- header -->
+        <header class="flex justify-between items-center w-full px-20 py-3 bg-white border-b-black outline">
+            <a class="text-2xl text-black" href="#">AskMe</a>
+            <form class="flex gap-2.5" role="search">
+                <input class="outline border-gray-400 p-2 rounded-md" type="search" placeholder="Ask me something ..."
+                    aria-label="Search">
+                <button
+                    class="rounded-md py-2 px-4 bg-gray-400 transition-colors duration-500 ease-in-out hover:bg-white"
+                    type="submit">Ask</button>
+            </form>
+            <div class="flex justify-between items-center gap-2.5">
+                <div class="bg-black rounded-full w-10 h-10 text-white flex items-center justify-center">
+                    PN
+                </div>
+                <div class="flex flex-col items-left justify-between">
+                    <div class="cursor-pointer text-black">
+                        ProfileName
+                    </div>
+                    <div class="flex w-120px gap-2.5">
+                        <a
+                            class="cursor-pointer text-xs text-gray-400 transition-colors duration-500 ease-in-out hover:text-black">
+                            Settings
+                        </a>
+                        <a
+                            class="cursor-pointer text-xs text-gray-400 transition-colors duration-500 ease-in-out hover:text-black">
+                            Log Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- main part -->
+        <main class="flex flex-grow h-full w-full my-5">
+
+            <!-- left side -->
+            <div class="px-5 h-full w-[70%] flex flex-col items-start justify-start gap-4">
+                <div class="flex items-center justify-start">
+                    <h1 class="text-3xl">New Question</h1>
+                </div>
+
+                <!-- title input -->
+                <div class="flex gap-10 w-full">
+                    <p class="w-10">Title</p>
+                    <input class="rounded-md outline w-full px-2 pb-2 pt-1" placeholder="Input title ..."></input>
+                </div>
+
+                <!-- text input -->
+                <div class="flex gap-10 w-full">
+                    <p class="w-10">Text</p>
+                    <textarea class="rounded-md outline w-full h-40 px-2 pb-2 pt-1" style="resize: none"
+                        placeholder="Input text ..."></textarea>
+                </div>
+
+                <!-- tags input -->
+                <div class="flex gap-10 w-full">
+                    <p class="w-10">Tags</p>
+                    <input class="rounded-md outline w-full px-2 pb-2 pt-1" placeholder="Input tags ..."></input>
+                </div>
+
+                <!-- ask button -->
+                <div class="flex self-end items-center justify-center p-3 rounded-lg border-black outline hover:bg-black hover:text-white transition-colors duration-500 ease-in-out cursor-pointer">
+                    <p>Ask</p>
+                </div>
+
+            </div>
+
+            <!-- right side -->
+            <div class="px-5 w-[40%] h-full flex flex-col gap-5 items-start justify-start">
+
+                <!-- popular tags -->
+                <div class="flex flex-col gap-2.5">
+                    <h1 class="text-2xl">Popular Tags</h1>
+                    <div class="h-40 w-full outline border-black rounded-xl p-3">
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                        Something
+                    </div>
+                </div>
+
+                <!-- best members -->
+                <div class="flex flex-col gap-2.5">
+                    <h1 class="text-2xl">Best Members</h1>
+                    <ul class="">
+                        <li class="cursor-pointer underline">Member 1</li>
+                        <li class="cursor-pointer underline">Member 2</li>
+                        <li class="cursor-pointer underline">Member 3</li>
+                        <li class="cursor-pointer underline">Member 4</li>
+                        <li class="cursor-pointer underline">Member 5</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <footer class="flex justify-center items-center w-full p-5 bg-gray-400 border-t-black outline">
+            <h3 class="text-black">VK Education, Autumn, 2024</h3>
+        </footer>
+    </div>
+</body>
+
+</html>

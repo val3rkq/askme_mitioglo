@@ -1,0 +1,16 @@
+{
+  "name": "askme_mitioglo",
+  "version": "1.0.0",
+  "description": "vk_web_homework",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind_styles.css -o ./public/static/app.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
