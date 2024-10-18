@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Кастомизация скроллбара */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+    /* Для браузеров WebKit (Chrome, Safari) */
+}
+
+.scrollbar-none {
+    -ms-overflow-style: none;
+    /* Для IE и Edge */
+    scrollbar-width: none;
+    /* Для Firefox */
+}
+
+/* Убираем кнопку очистки в браузерах WebKit (Chrome, Safari) */
+input::-webkit-clear-button,
+input::-webkit-search-cancel-button,
+input::-ms-clear {
+    display: none;
+}
