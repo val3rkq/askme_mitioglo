@@ -4,8 +4,7 @@
   "description": "vk_web_homework",
   "main": "index.js",
   "scripts": {
-    "build:css": "tailwindcss -i ./src/tailwind_styles.css -o ./public/static/app.css --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "tailwindcss -i ./src/tailwind_styles.css -o ./static/app.css --watch"
   },
   "keywords": [],
   "author": "",
