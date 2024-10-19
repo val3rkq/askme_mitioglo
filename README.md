@@ -22,11 +22,12 @@ Before you get started, ensure you have the following installed on your machine:
 
 Follow these steps to get a local copy of the project up and running:
 
-### 1. Clone the repository
+### 1. Clone the repository and go to frontend part
 
 ```bash
-git clone https://github.com/val3rkq/askme-app.git
-cd askme-app
+git clone https://github.com/val3rkq/askme-mitioglo.git
+cd askme-mitioglo
+git checkout frontend
 ```
 
 ### 2. Install dependencies
