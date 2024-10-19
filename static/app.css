@@ -817,8 +817,21 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-current{
+  background-color: currentColor;
+}
+
 .bg-image{
   background-image: bg-[url('./../static/img/background.png')];
+}
+
+.bg-\[url\(\'\.\/\.\.\/static\/img\/background\.png\'\)\]{
+  background-image: url('./../static/img/background.png');
 }
 
 .bg-cover{
@@ -1205,5 +1218,9 @@ input::-ms-clear {
 
   .md\:flex-row{
     flex-direction: row;
+  }
+
+  .md\:pr-3\.5{
+    padding-right: 0.875rem;
   }
 }
