@@ -43,30 +43,29 @@
         <main class="flex flex-col md:flex-row md:flex-grow w-full my-5 px-3 items-center justify-center gap-6">
 
             <!-- center card -->
-            <form class="w-full md:w-[80%]">
-                <div class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5">
-                    <h1
-                        class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
-                        Log In</h1>
-                    
-                    <input id="login"
-                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" name="login" placeholder="Login">
+            <form
+                class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5 md:w-[80%]">
+                <h1
+                    class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
+                    Log In</h1>
 
-                    <input id="password"
-                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="password" name="password" placeholder="Password">
+                <input id="login"
+                    class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
+                    type="text" name="login" placeholder="Login">
 
-                    <!-- error text -->
-                    <div class="w-full flex justify-start">
-                        <!-- <p class="text-error text-sm"> </p> -->
-                        <p class="text-error text-sm">Ошибка при входе!!</p>
-                    </div>
-                    <div class="w-full md:w-[80%] flex items-center justify-center">
-                        <button
-                            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                            type="submit" onclick="location.href='./index_logged_in.html'">Log In</button>
-                    </div>
+                <input id="password"
+                    class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
+                    type="password" name="password" placeholder="Password">
+
+                <!-- error text -->
+                <div class="w-full flex justify-start">
+                    <!-- <p class="text-error text-sm"> </p> -->
+                    <p class="text-error text-sm">Ошибка при входе!!</p>
+                </div>
+                <div class="w-full md:w-[80%] flex items-center justify-center">
+                    <button
+                        class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
+                        type="submit" onclick="location.href='./index_logged_in.html'">Log In</button>
                 </div>
             </form>
 
