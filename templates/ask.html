@@ -25,7 +25,7 @@
                     type="text" placeholder="Search something ..." aria-label="Search">
                 <button
                     class="h-10 rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                    type="button">Search</button>
+                    type="submit">Search</button>
             </form>
             <div class="flex justify-between items-center gap-2.5">
                 <div
@@ -55,7 +55,8 @@
             class="flex flex-col md:flex-row md:flex-grow w-full my-5 px-5 max-sm:px-1.5 items-start justify-center gap-4">
 
             <!-- left side -->
-            <div class="h-full w-full md:w-[70%] flex flex-col items-start justify-start gap-3 my-5 max-sm:px-1.5 md:pr-3.5">
+            <div
+                class="h-full w-full md:w-[70%] flex flex-col items-start justify-start gap-3 my-5 max-sm:px-1.5 md:pr-3.5">
                 <div class="flex items-center justify-start">
                     <h1
                         class="text-3xl transition-custom translate-y-[-20px] translate-x-0 hover:translate-x-1 cursor-pointer">
@@ -63,49 +64,46 @@
                     </h1>
                 </div>
 
-                <div class="w-full flex flex-col gap-3.5 items-start justify-start">
-                    <div class="w-full flex justify-start items-start gap-5">
-                        <h3
-                            class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
-                            Title</h3>
-                        <form class="w-full">
-                            <input
+
+                <form class="w-full">
+                    <div class="w-full flex flex-col gap-3.5 items-start justify-start">
+                        <div class="w-full flex justify-start items-start gap-5">
+                            <label for="titlefield"
+                                class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
+                                Title</label>
+                            <input id="titlefield"
                                 class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                                type="text" placeholder="Input title..."></input>
-                        </form>
-                    </div>
-                    <div class="w-full flex justify-start items-start gap-5">
-                        <h3
-                            class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
-                            Text</h3>
-                        <form class="w-full">
-                            <textarea
+                                type="text" placeholder="Input title...">
+                        </div>
+                        <div class="w-full flex justify-start items-start gap-5">
+                            <label for="textfield"
+                                class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
+                                Text</label>
+                            <textarea id="textfield"
                                 class="resize-none w-full h-[200px] text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
                                 type="text" placeholder="Input text..."></textarea>
-                        </form>
-                    </div>
-                    <div class="w-full flex justify-start items-start gap-5">
-                        <h3
-                            class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
-                            Tags</h3>
-                        <form class="w-full">
-                            <input
+                        </div>
+                        <div class="w-full flex justify-start items-start gap-5">
+                            <label for="tagsfield"
+                                class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
+                                Tags</label>
+                            <input id="tagsfield"
                                 class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                                type="text" placeholder="Input tags..."></input>
-                        </form>
-                    </div>
+                                type="text" placeholder="Input tags...">
+                        </div>
 
-                    <!-- error text -->
-                    <div class="w-full md:w-[80%] flex items-center justify-start">
-                        <!-- <p class="text-error text-sm"> </li> -->
-                        <p class="text-error text-sm">Ошибка при создании вопроса!!</p>
+                        <!-- error text -->
+                        <div class="w-full md:w-[80%] flex items-center justify-start">
+                            <!-- <p class="text-error text-sm"> </li> -->
+                            <p class="text-error text-sm">Ошибка при создании вопроса!!</p>
+                        </div>
+                        <div class="w-full md:w-[80%] flex items-center justify-start">
+                            <button
+                                class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
+                                type="submit">Ask</button>
+                        </div>
                     </div>
-                    <div class="w-full md:w-[80%] flex items-center justify-start">
-                        <button
-                            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                            type="button">Ask</button>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <!-- right side -->
@@ -116,11 +114,16 @@
                     <h1 class="text-2xl w-full transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
                         Popular Tags</h1>
                     <ul class="bg-selected h-40 w-full shadow-custom rounded-xl p-3 overflow-ellipsis">
-                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a href="./tag.html">Something</a></li>
-                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a href="./tag.html">Something</a></li>
-                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a href="./tag.html">Something</a></li>
-                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a href="./tag.html">Something</a></li>
-                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a href="./tag.html">Something</a></li>
+                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
+                                href="./tag.html">Something</a></li>
+                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
+                                href="./tag.html">Something</a></li>
+                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
+                                href="./tag.html">Something</a></li>
+                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
+                                href="./tag.html">Something</a></li>
+                        <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
+                                href="./tag.html">Something</a></li>
                     </ul>
                 </div>
 

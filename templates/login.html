@@ -26,7 +26,7 @@
                     type="text" placeholder="Search something ..." aria-label="Search">
                 <button
                     class="h-10 rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                    type="button">Search</button>
+                    type="submit">Search</button>
             </form>
             <div class="flex w-[120px] justify-center gap-2.5">
                 <a class="cursor-pointer text-sm text-text" href="./login.html">
@@ -40,36 +40,35 @@
         </header>
 
         <!-- main part -->
-        <main
-            class="flex flex-col md:flex-row md:flex-grow w-full my-5 px-3 items-center justify-center gap-6">
+        <main class="flex flex-col md:flex-row md:flex-grow w-full my-5 px-3 items-center justify-center gap-6">
 
             <!-- center card -->
-            <div
-                class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5">
-                <h1
-                    class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
-                    Log In</h1>
-                <form class="w-full md:w-[80%]">
-                    <input
+            <form class="w-full md:w-[80%]">
+                <div class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5">
+                    <h1
+                        class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
+                        Log In</h1>
+                    
+                    <input id="login"
                         class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" placeholder="Login"></input>
-                </form>
-                <form class="w-full md:w-[80%]">
-                    <input
+                        type="text" name="login" placeholder="Login">
+
+                    <input id="password"
                         class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" placeholder="Password"></input>
-                </form>
-                <!-- error text -->
-                <div class="w-full md:w-[80%] flex items-center justify-start">
-                    <!-- <p class="text-error text-sm"> </p> -->
-                    <p class="text-error text-sm">Ошибка при входе!!</p>
+                        type="password" name="password" placeholder="Password">
+
+                    <!-- error text -->
+                    <div class="w-full md:w-[80%] flex items-center justify-start">
+                        <!-- <p class="text-error text-sm"> </p> -->
+                        <p class="text-error text-sm">Ошибка при входе!!</p>
+                    </div>
+                    <div class="w-full md:w-[80%] flex items-center justify-center">
+                        <button
+                            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
+                            type="submit" onclick="location.href='./index_logged_in.html'">Log In</button>
+                    </div>
                 </div>
-                <div class="w-full md:w-[80%] flex items-center justify-center">
-                    <button
-                        class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                        type="button" onclick="location.href='./index_logged_in.html'">Log In</button>
-                </div>
-            </div>
+            </form>
 
         </main>
 

@@ -27,7 +27,7 @@
                     type="text" placeholder="Search something ..." aria-label="Search">
                 <button
                     class="h-10 rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                    type="button">Search</button>
+                    type="submit">Search</button>
             </form>
             <div class="flex justify-between items-center gap-2.5">
                 <div
@@ -54,49 +54,47 @@
 
 
         <!-- main part -->
-        <main class="flex flex-col md:flex-row md:flex-grow w-full max-sm:my-12 my-5 px-3 items-center justify-center gap-6">
+        <main
+            class="flex flex-col md:flex-row md:flex-grow w-full max-sm:my-12 my-5 px-3 items-center justify-center gap-6">
 
             <!-- center card -->
-            <div class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5">
-                <h1
-                    class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
-                    Settings</h1>
-                <form class="w-full md:w-[80%]">
-                    <input
-                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" placeholder="Login" value="my_login"></input>
-                </form>
-                <form class="w-full md:w-[80%]">
-                    <input
-                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" placeholder="Email" value="myemail@gmail.com"></input>
-                </form>
-                <form class="w-full md:w-[80%]">
-                    <input
-                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                        type="text" placeholder="NickName" value="MyNickName17913"></input>
-                </form>
-                <div class="mt-5 w-full md:w-[80%] flex items-center justify-start gap-2.5">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center text-selected rounded-full bg-primary p-2 transition-custom cursor-pointer">
-                        AV
-                    </div>
-                    <button
-                        class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                        type="submit">Upload Avatar</button>
-                </div>
+            <form class="w-full md:w-[80%]">
 
-                <!-- error text -->
-                <div class="w-full md:w-[80%] flex items-center justify-start">
-                    <!-- <p class="text-error text-sm"> </p> -->
-                    <p class="text-error text-sm">Ошибка при обновлении настроек!!</p>
+                <div class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5">
+                    <h1
+                        class="flex w-full md:w-[80%] justify-center text-5xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer translate-y-[-20px]">
+                        Settings</h1>
+                    <input
+                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
+                        type="text" placeholder="Login" value="my_login">
+                    <input
+                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
+                        type="text" placeholder="Email" value="myemail@gmail.com">
+                    <input
+                        class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
+                        type="text" placeholder="NickName" value="MyNickName17913">
+                    <div class="mt-5 w-full md:w-[80%] flex items-center justify-start gap-2.5">
+                        <div
+                            class="w-10 h-10 flex items-center justify-center text-selected rounded-full bg-primary p-2 transition-custom cursor-pointer">
+                            AV
+                        </div>
+                        <button
+                            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
+                            type="submit">Upload Avatar</button>
+                    </div>
+
+                    <!-- error text -->
+                    <div class="w-full md:w-[80%] flex items-center justify-start">
+                        <!-- <p class="text-error text-sm"> </p> -->
+                        <p class="text-error text-sm">Ошибка при обновлении настроек!!</p>
+                    </div>
+                    <div class="w-full md:w-[80%] flex items-center justify-center">
+                        <button
+                            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
+                            type="submit" onclick="location.href='./index_logged_in.html'">Save</button>
+                    </div>
                 </div>
-                <div class="w-full md:w-[80%] flex items-center justify-center">
-                    <button
-                        class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                        type="button" onclick="location.href='./index_logged_in.html'">Save</button>
-                </div>
-            </div>
+            </form>
 
         </main>
 
