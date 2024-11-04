@@ -18,18 +18,18 @@
     </div>
     <div class="w-full flex flex-col justify-between items-start gap-2.5">
     <div class="flex flex-col gap-2.5">
-        <h1 class="text-xl cursor-pointer transition-custom translate-x-0 hover:translate-x-1" onclick="location.href='/question/{{ question.id }}/'">{{ question.title }}</h1>
+        <h1 class="text-xl cursor-pointer transition-custom translate-x-0 hover:translate-x-1" onclick="location.href='{% url 'question' question_id=question.id %}'">{{ question.title }}</h1>
         <p class="text-xs">{{ question.text }}</p>
     </div>
     <div class="w-full flex flex-col sm:flex-row justify-between items-left">
-        <a href="/question/{{ question.id }}/" class="font-medium text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">answer ({{ question.answers_cnt }})</a>
+        <a href="{% url 'question' question_id=question.id %}" class="font-medium text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">answer ({{ question.answers_cnt }})</a>
         <div class="flex gap-[7px]">
         <p class="font-medium text-sm">Tags:</p>
 
         <!-- tags list -->
         <div class="flex gap-[3px] overflow-ellipsis">
             {% for tag in question.tags %}
-                <a href="/tag/{{ tag }}/" class="text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">{{ tag }}, </a>
+                <a href="{% url 'tag' tag=tag %}" class="text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">{{ tag }}, </a>
               {% endfor %}
             </div>
           </div>

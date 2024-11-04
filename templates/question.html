@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block header_profile %}
-  <div class="flex w-[120px] justify-center gap-2.5">
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="/login">Log In</a>
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="/signup">Register</a>
-  </div>
+  {% include "include/header_profile.html" %}
 {% endblock %}
 
 {% block content %}
@@ -59,7 +56,7 @@
                     <!-- tags list -->
                     <div class="flex gap-[3px] overflow-ellipsis">
                         {% for tag in question.tags %}
-                            <a href="/tag/{{ tag }}"
+                            <a href="{% url 'tag' tag=tag %}"
                                 class="text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">
                                 {{ tag }}, </a>
                         {% endfor %}

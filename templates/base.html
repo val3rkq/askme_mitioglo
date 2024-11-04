@@ -55,15 +55,15 @@
                         Popular Tags</h1>
                     <ul class="bg-selected h-40 w-full shadow-custom rounded-xl p-3 overflow-ellipsis">
                         <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
-                                href="/tag/something1/">Something1</a></li>
+                                href="{% url 'tag' tag="something1" %}">Something1</a></li>
                         <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
-                                href="/tag/something2/">Something2</a></li>
+                                href="{% url 'tag' tag="something2" %}">Something2</a></li>
                         <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
-                                href="/tag/something3/">Something3</a></li>
+                                href="{% url 'tag' tag="something3" %}">Something3</a></li>
                         <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
-                                href="/tag/something4/">Something4</a></li>
+                                href="{% url 'tag' tag="something4" %}">Something4</a></li>
                         <li class="underline cursor-pointer transition-custom translate-x-0 hover:translate-x-1"><a
-                                href="/tag/something5/">Something5</a></li>
+                                href="{% url 'tag' tag="something5" %}">Something5</a></li>
                     </ul>
                 </div>
 
@@ -88,7 +88,7 @@
                 <!--Ask something  -->
                 <button
                     class="h-10 rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-                    type="button" onclick="location.href='/ask/'">Ask something</button>
+                    type="button" onclick="location.href='{% url 'ask' %}'">Ask something</button>
             </div>
         </main>
 

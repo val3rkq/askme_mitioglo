@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block header_profile %}
-  <div class="flex w-[120px] justify-center gap-2.5">
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="/login">Log In</a>
-    <a class="cursor-pointer text-sm text-text transition-custom hover:text-text" href="/signup">Register</a>
-  </div>
+  {% include "include/header_profile.html" %}
 {% endblock %}
 
 {% block content %}

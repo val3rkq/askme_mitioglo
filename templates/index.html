@@ -9,33 +9,17 @@
 {% endblock %}
 
 {% block header_profile %}
-  <div class="flex w-[120px] justify-center gap-2.5">
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="/login">Log In</a>
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="/signup">Register</a>
-  </div>
-{% endblock %}
-
-{% block header_profile_logged_in %}
-  <div class="flex justify-between items-center gap-2.5">
-    <div class="bg-black rounded-full w-10 h-10 text-selected flex items-center justify-center cursor-pointer">PN</div>
-    <div class="flex flex-col items-left justify-between">
-      <div class="cursor-pointer text-sm text-black translate-x-0 hover:translate-x-1 transition-custom">ProfileName</div>
-      <div class="flex w-120px gap-2.5">
-        <a class="cursor-pointer text-sm text-secondary transition-colors duration-500 ease-in-out hover:text-black" href="/settings/">Settings</a>
-        <a class="cursor-pointer text-sm text-secondary transition-colors duration-500 ease-in-out hover:text-black" href="/">Log Out</a>
-      </div>
-    </div>
-  </div>
+  {% include "include/header_profile.html" %}
 {% endblock %}
 
 {% block questions_title %}
   <div class="flex items-center justify-start gap-5 max-sm:px-1.5">
     {% if is_hot_questions %}
       <a class="text-xl cursor-pointer text-secondary hover:text-primary transition-custom translate-x-0 hover:translate-x-1" href="/">New Questions</h1>
-      <a class="text-3xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer" href="/hot/">Hot Questions</a>
+      <a class="text-3xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer" href="{% url 'hot' %}">Hot Questions</a>
     {% else %}
       <h1 class="text-3xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">New Questions</h1>
-      <a class="text-xl cursor-pointer text-secondary hover:text-primary transition-custom translate-x-0 hover:translate-x-1" href="/hot/">Hot Questions</a>
+      <a class="text-xl cursor-pointer text-secondary hover:text-primary transition-custom translate-x-0 hover:translate-x-1" href="{% url 'login' %}">Hot Questions</a>
     {% endif %}
   </div>
 {% endblock %}
