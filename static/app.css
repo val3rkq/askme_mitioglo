@@ -556,6 +556,10 @@ video {
   display: none;
 }
 
+.static{
+  position: static;
+}
+
 .my-12{
   margin-top: 3rem;
   margin-bottom: 3rem;
@@ -581,6 +585,10 @@ video {
 
 .mt-5{
   margin-top: 1.25rem;
+}
+
+.block{
+  display: block;
 }
 
 .flex{
@@ -619,11 +627,6 @@ video {
   height: 100vh;
 }
 
-.h-min{
-  height: -moz-min-content;
-  height: min-content;
-}
-
 .max-h-\[70px\]{
   max-height: 70px;
 }
@@ -654,11 +657,6 @@ video {
 
 .w-full{
   width: 100%;
-}
-
-.w-min{
-  width: -moz-min-content;
-  width: min-content;
 }
 
 .max-w-\[800px\]{
@@ -829,14 +827,6 @@ video {
 
 .bg-image{
   background-image: bg-[url('./../static/img/background.png')];
-}
-
-.bg-cover{
-  background-size: cover;
-}
-
-.bg-center{
-  background-position: center;
 }
 
 .p-2{
