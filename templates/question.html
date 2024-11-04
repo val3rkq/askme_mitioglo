@@ -70,44 +70,7 @@
 
         {% for answer in answers %}
             <!-- card-answer -->
-            <div class="rounded-xl w-full py-2 px-3 flex gap-5 shadow-custom">
-                <div class="flex flex-col justify-start items-start gap-3">
-                    <div
-                        class="w-20 h-20 rounded-full bg-primary text-selected flex items-center justify-center">
-                        AV
-                    </div>
-                    <form>
-                        <div class="w-20 flex justify-between items-center gap-2.5">
-                            <input
-                                class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer"
-                                type="text" value="{{ answer.likes }}" disabled>
-                            <div class="flex gap-2.5 justify-end">
-                                <!-- Like Button -->
-                                <button
-                                    class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom">
-                                    <i class="fas fa-thumbs-up"></i>
-                                </button>
-
-                                <!-- Dislike Button -->
-                                <button
-                                    class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="w-full flex flex-col justify-between items-start gap-2.5">
-                    <p class="text-sm">{{ answer.text }}</p>
-                    <div class="w-full flex justify-end items-center space-x-1.5">
-                        <input type="checkbox" id="agree"
-                            class="appearance-none cursor-pointer border border-gray-300 w-5 h-5 rounded transition-custom checked:bg-primary checked:relative checked:after:content-['\2713'] checked:after:text-white checked:after:flex checked:after:justify-center checked:after:items-center checked:after:w-[19px] checked:after:h-[19px] checked:after:text-center checked:after:text-xs">
-                        <label for="agree"
-                            class="text-sm text-primary cursor-pointer transition-custom translate-y-0 hover:-translate-y-1">Correct
-                            !</label>
-                    </div>
-                </div>
-            </div>
+            {% include "include/answer.html" %}
         {% endfor %}
 
         <!-- paging -->

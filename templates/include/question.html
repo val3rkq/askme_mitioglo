@@ -1,0 +1,38 @@
+<!-- card -->
+<div class="rounded-xl w-full py-2 px-3 flex gap-3 shadow-custom">
+    <div class="flex flex-col justify-start items-start gap-3">
+    <div class="w-40 h-40 rounded-full bg-primary text-selected flex items-center justify-center">AV</div>
+    <form>
+        <div class="w-40 flex justify-start items-center gap-2.5">
+        <input class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer" type="text" value="{{ question.likes }}" disabled />
+
+        <div class="flex gap-2.5 justify-end">
+            <!-- Like Button -->
+            <button class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom"><i class="fas fa-thumbs-up"></i></button>
+
+            <!-- Dislike Button -->
+            <button class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom"><i class="fas fa-thumbs-down"></i></button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <div class="w-full flex flex-col justify-between items-start gap-2.5">
+    <div class="flex flex-col gap-2.5">
+        <h1 class="text-xl cursor-pointer transition-custom translate-x-0 hover:translate-x-1" onclick="location.href='/question/{{ question.id }}/'">{{ question.title }}</h1>
+        <p class="text-xs">{{ question.text }}</p>
+    </div>
+    <div class="w-full flex flex-col sm:flex-row justify-between items-left">
+        <a href="/question/{{ question.id }}/" class="font-medium text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">answer ({{ question.answers_cnt }})</a>
+        <div class="flex gap-[7px]">
+        <p class="font-medium text-sm">Tags:</p>
+
+        <!-- tags list -->
+        <div class="flex gap-[3px] overflow-ellipsis">
+            {% for tag in question.tags %}
+                <a href="/tag/{{ tag }}/" class="text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">{{ tag }}, </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
