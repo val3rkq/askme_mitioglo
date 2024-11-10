@@ -18,14 +18,14 @@
             <div class="flex flex-col justify-start items-start gap-3">
                 <div
                     class="w-40 h-40 rounded-full bg-primary text-selected flex items-center justify-center">
-                    AV
+                    {{ question.author }}
                 </div>
                 <form>
                     <div class="w-40 flex justify-start items-center gap-2.5">
 
                         <input
                             class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer"
-                            type="text" value="{{ question.likes }}" disabled>
+                            type="text" value="{{ question.likes_count }}" disabled>
 
                         <div class="flex gap-2.5 justify-end">
                             <!-- Like Button -->
@@ -55,10 +55,10 @@
 
                     <!-- tags list -->
                     <div class="flex gap-[3px] overflow-ellipsis">
-                        {% for tag in question.tags %}
-                            <a href="{% url 'tag' tag=tag %}"
-                                class="text-sm cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">
-                                {{ tag }}, </a>
+                        {% for tag in question.tags.all %}
+                            <a href="{% url 'tag' tag=tag.name %}"
+                                class="align-bottom text-xs cursor-pointer transition-custom translate-y-0 hover:-translate-y-1 text-tag hover:text-primary">
+                                {{ tag.name }} | </a>
                         {% endfor %}
                     </div>
                 </div>

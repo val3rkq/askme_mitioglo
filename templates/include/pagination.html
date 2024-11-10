@@ -1,9 +1,21 @@
 <div class="w-full h-20 flex items-center justify-start gap-3 max-sm:px-1.5">
-    {% for num in questions.paginator.page_range %}
-        {% if questions.number == num %}
-        <div onclick="location.href='?page={{ num }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-primary hover:bg-selected hover:text-primary text-selected transition-custom">{{ num }}</div>
+    {% for num in questions.adjusted_elided_pages %}
+        {% if num == questions.paginator.ELLIPSIS %}
+            {% comment %} {% if questions.has_previous %}
+                <div onclick="location.href='?page={{ questions.previous_page_number }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-selected hover:bg-primary hover:text-selected text-primary transition-custom"><-</div>
+            {% endif%} {% endcomment %}
+
+            {{ num }}
+
+            {% comment %} {% if questions.has_next %}
+                <div onclick="location.href='?page={{ questions.next_page_number }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-selected hover:bg-primary hover:text-selected text-primary transition-custom">-></div>
+            {% endif%} {% endcomment %}
         {% else %}
-        <div onclick="location.href='?page={{ num }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-selected hover:bg-primary hover:text-selected text-primary transition-custom">{{ num }}</div>
+            {% if questions.number == num %}
+                <div onclick="location.href='?page={{ num }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-primary hover:bg-selected hover:text-primary text-selected transition-custom">{{ num }}</div>
+            {% else %}
+                <div onclick="location.href='?page={{ num }}'" class="rounded-xl px-3 py-2 flex items-center justify-center cursor-pointer shadow-custom border border-primary bg-selected hover:bg-primary hover:text-selected text-primary transition-custom">{{ num }}</div>
+            {% endif %}
         {% endif %}
     {% endfor %}
 </div>

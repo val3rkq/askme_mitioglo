@@ -2,13 +2,13 @@
     <div class="flex flex-col justify-start items-start gap-3">
         <div
             class="w-20 h-20 rounded-full bg-primary text-selected flex items-center justify-center">
-            AV
+            {{ answer.author }}
         </div>
         <form>
             <div class="w-20 flex justify-between items-center gap-2.5">
                 <input
                     class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer"
-                    type="text" value="{{ answer.likes }}" disabled>
+                    type="text" value="{{ answer.likes_count }}" disabled>
                 <div class="flex gap-2.5 justify-end">
                     <!-- Like Button -->
                     <button
