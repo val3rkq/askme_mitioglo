@@ -18,6 +18,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         ratio = options['ratio']
 
+        if ratio < 10000:
+            self.stdout.write(self.style.ERROR('Ratio minimum = 10 000'))
+            return
+
         # cleaning db
         User.objects.all().delete()
         Question.objects.all().delete()
