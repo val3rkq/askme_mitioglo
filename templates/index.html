@@ -19,7 +19,7 @@
       <a class="text-3xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer" href="{% url 'hot' %}">Hot Questions</a>
     {% else %}
       <h1 class="text-3xl transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">New Questions</h1>
-      <a class="text-xl cursor-pointer text-secondary hover:text-primary transition-custom translate-x-0 hover:translate-x-1" href="{% url 'login' %}">Hot Questions</a>
+      <a class="text-xl cursor-pointer text-secondary hover:text-primary transition-custom translate-x-0 hover:translate-x-1" href="{% url 'hot' %}">Hot Questions</a>
     {% endif %}
   </div>
 {% endblock %}
