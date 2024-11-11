@@ -18,7 +18,7 @@ def hot_questions(request):
 
 # Список вопросов по тэгу
 def questions_by_tag(request, tag):
-    questions = Question.objects.filter(tags__name=tag)
+    questions = Question.objects.by_tag(tag)
     page = paginate(questions, request)
     return render(request, 'tag.html', {'questions': page, 'tag': tag})
 

@@ -27,8 +27,11 @@ class Question(models.Model):
         
         def hot(self):
             return self.order_by('-likes_count')
+        
+        def by_tag(self, tag):
+            return self.filter(tags__name=tag)
     
-    objects = QuestionManager()  # Default manager
+    objects = QuestionManager()
 
 
 class Answer(models.Model):
