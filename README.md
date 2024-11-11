@@ -1,7 +1,3 @@
-Here's a rewritten `README.md` to reflect a backend-focused project with Django and PostgreSQL for the **AskMe App**.
-
----
-
 # AskMe App
 
 ## Overview
