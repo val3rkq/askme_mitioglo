@@ -96,6 +96,12 @@ def signup_view(request):
         if signup_form.is_valid():
             try:
                 user = signup_form.create_user()
+                
+                profile = Profile(user=user, 
+                                  nickname = signup_form.cleaned_data['nickname'])
+                # profile.avatar=signup_form.cleaned_data.get('avatar', None), 
+                profile.save()
+                
                 login_field = signup_form.cleaned_data["login"]
                 password = signup_form.cleaned_data["password"]
                 user = authenticate(request, username=login_field, password=password)
@@ -106,7 +112,7 @@ def signup_view(request):
                 else:
                     messages.error(request, 'Ошибка аутентификации после регистрации!')
             except Exception as e:
-                messages.error(request, f'Ошибка при создании пользователя: {str(e)}')
+                messages.error(request, 'Ошибка при создании пользователя!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных!')
 
@@ -145,7 +151,7 @@ def settings_view(request):
 
                 return redirect('settings')
             except Exception as e:
-                messages.error(request, f'Ошибка при обновлении настроек: {e}')
+                messages.error(request, 'Ошибка при обновлении настроек!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных.')
     else:
@@ -182,7 +188,7 @@ def ask_question(request):
 
                 return redirect('question', question_id=question.id)
             except Exception as e:
-                messages.error(request, f'Ошибка при создании вопроса: {e}')
+                messages.error(request, 'Ошибка при создании вопроса!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных.')
     else:
