@@ -82,18 +82,22 @@
         </div>
 
         <!-- answer -->
-        <form class="w-full">
+        <form method="POST" class="w-full">
+
+            {% csrf_token %}
+    
             <div class="w-full h-full flex flex-col items-start justify-start gap-3 max-sm:px-1.5">
-                <textarea
+                <textarea id="textfield" name="text"
                     class="resize-none w-full h-[100px] text-sm outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                    type="text" placeholder="Enter your answer here.."></textarea>
+                    type="text" placeholder="Enter your answer here.." value="{{ form.text.value|default_if_none:'' }}"></textarea>
 
                 <!-- error text -->
-                <div class="w-full flex justify-start">
-                    <!-- <p class="text-error text-sm"> </p> -->
-                    <p class="text-error text-sm">Ошибка при создании ответа!!</p>
-                </div>
-
+                {% for message in messages %}
+                    <div class="w-full flex justify-start">
+                        <p class="text-error text-sm">{{ message }}</p>
+                    </div>
+                {% endfor %}
+    
                 <div class="w-full md:w-[80%] flex items-center justify-start">
                     <button
                         class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
@@ -101,5 +105,6 @@
                 </div>
             </div>
         </form>
+
     </div>
 {% endblock %}

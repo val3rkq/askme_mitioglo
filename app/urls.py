@@ -10,4 +10,5 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),  # Форма регистрации
     path('settings/', views.settings_view, name='settings'),  # Форма настроек
     path('ask/', views.ask_question, name='ask'),  # Создание вопроса
+    path('logout/', views.logout_view, name='logout'),  # Выход
 ]

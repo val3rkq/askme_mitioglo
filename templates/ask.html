@@ -18,38 +18,43 @@
 {% endblock %}
 
 {% block content %}
-    <form class="w-full">
+    <form action="{% url 'ask' %}" method="POST" class="w-full">
+        {% csrf_token %}
         <div class="w-full flex flex-col gap-3.5 items-start justify-start">
             <div class="w-full flex justify-start items-start gap-5">
                 <label for="titlefield"
                     class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
                     Title</label>
-                <input id="titlefield"
+                <input id="titlefield" name="title"
                     class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                    type="text" placeholder="Input title...">
+                    type="text" placeholder="Input title..." value="{{ form.title.value|default_if_none:'' }}">
             </div>
             <div class="w-full flex justify-start items-start gap-5">
                 <label for="textfield"
                     class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
                     Text</label>
-                <textarea id="textfield"
+                <textarea id="textfield" name="text"
                     class="resize-none w-full h-[200px] text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                    type="text" placeholder="Input text..."></textarea>
+                    placeholder="Input text...">{{ form.text.value|default_if_none:'' }}</textarea>
             </div>
             <div class="w-full flex justify-start items-start gap-5">
                 <label for="tagsfield"
                     class="mt-1 text-primary transition-custom translate-x-0 hover:translate-x-1 cursor-pointer">
                     Tags</label>
-                <input id="tagsfield"
+                <input id="tagsfield" name="tags"
                     class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
-                    type="text" placeholder="Input tags...">
+                    type="text" placeholder="Input tags, separated by commas" value="{{ form.tags.value|default_if_none:'' }}">
             </div>
 
             <!-- error text -->
-            <div class="w-full flex justify-start">
-                <!-- <p class="text-error text-sm"> </li> -->
-                <p class="text-error text-sm">Ошибка при создании вопроса!!</p>
-            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="w-full flex justify-start">
+                        <p class="text-error text-sm">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
             <div class="w-full md:w-[80%] flex items-center justify-start">
                 <button
                     class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"

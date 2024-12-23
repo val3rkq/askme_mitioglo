@@ -1,4 +1,19 @@
-<div class="flex w-[120px] justify-center gap-2.5">
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="{% url 'login' %}">Log In</a>
-    <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="{% url 'signup' %}">Register</a>
-</div>
+{% if request.user.is_authenticated %}
+    <!-- authorized -->
+    <div class="flex justify-between items-center gap-2.5">
+        <div class="bg-black rounded-full w-10 h-10 text-selected flex items-center justify-center cursor-pointer">PN</div>
+        <div class="flex flex-col items-left justify-between">
+        <div class="cursor-pointer text-sm text-black translate-x-0 hover:translate-x-1 transition-custom">{{ request.user.username }}</div>
+        <div class="flex w-120px gap-2.5">
+            <a class="cursor-pointer text-sm text-secondary transition-colors duration-500 ease-in-out hover:text-black" href="{% url 'settings' %}">Settings</a>
+            <a class="cursor-pointer text-sm text-secondary transition-colors duration-500 ease-in-out hover:text-black" href="{% url 'logout' %}?continue={{ request.path }}">Log Out</a>
+        </div>
+        </div>
+    </div>
+{% else %}
+    <!-- unauthorized -->
+    <div class="flex w-[120px] justify-center gap-2.5">
+        <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="{% url 'login' %}?continue={{ request.path }}">Log In</a>
+        <a class="cursor-pointer text-sm text-secondary transition-custom hover:text-text" href="{% url 'signup' %}">Register</a>
+    </div>
+{% endif %}
