@@ -124,7 +124,7 @@ def signup_view(request):
                 else:
                     messages.error(request, 'Ошибка аутентификации после регистрации!')
             except Exception as e:
-                messages.error(request, f'Ошибка при создании пользователя: {str(e)}')
+                messages.error(request, 'Ошибка при создании пользователя!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных!')
 
@@ -164,7 +164,7 @@ def settings_view(request):
 
                 return redirect('settings')
             except Exception as e:
-                messages.error(request, f'Ошибка при обновлении настроек: {e}')
+                messages.error(request, 'Ошибка при обновлении настроек!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных.')
     else:
@@ -201,7 +201,7 @@ def ask_question(request):
 
                 return redirect('question', question_id=question.id)
             except Exception as e:
-                messages.error(request, f'Ошибка при создании вопроса: {e}')
+                messages.error(request, 'Ошибка при создании вопроса!')
         else:
             messages.error(request, 'Проверьте правильность введенных данных.')
     else:
