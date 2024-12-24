@@ -12,6 +12,7 @@ from .models import Answer, Question, Tag, Profile, QuestionLike, AnswerLike
 # Главная страница - список новых вопросов
 def index(request):
     questions = Question.objects.new()
+
     page = paginate(questions, request)
     return render(request, 'index.html', {'questions': page, 'is_hot_questions': False})
 
@@ -35,16 +36,6 @@ def questions_by_tag(request, tag):
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = Answer.objects.filter(question=question).order_by('-created_at')
-
-    for answer in answers:
-        like_obj = AnswerLike.objects.filter(user=request.user, answer=answer).first()
-        
-        if like_obj:
-            answer.is_liked = like_obj.is_like
-            answer.is_disliked = like_obj.is_dislike
-        else:
-            answer.is_liked = False
-            answer.is_disliked = False
 
     page = paginate(answers, request)
 
@@ -226,45 +217,70 @@ def paginate(objects_list, request, per_page=5):
     return page
 
 
-@login_required(login_url="login")
 @csrf_exempt
+@login_required(login_url='login')
 def like_question(request):
-    if request.method == 'POST':
-        question_id = request.POST.get('question_id')
-        action = request.POST.get('action')  # "like" или "dislike"
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-        if not question_id or not action:
-            return JsonResponse({'error': 'Missing parameters'}, status=400)
+    question_id = request.POST.get('question_id')
+    action = request.POST.get('action')  # "like" or "dislike"
 
-        try:
-            question = Question.objects.get(id=question_id)
-        except Question.DoesNotExist:
-            return JsonResponse({'error': 'Question not found'}, status=404)
+    if not question_id or not action:
+        return JsonResponse({'error': 'Missing parameters'}, status=400)
 
-        user = request.user
-        like_obj, created = QuestionLike.objects.get_or_create(user=user, question=question)
+    try:
+        question = Question.objects.get(id=question_id)
+    except Question.DoesNotExist:
+        return JsonResponse({'error': 'Question not found'}, status=404)
 
+    user = request.user
+    like_obj, created = QuestionLike.objects.get_or_create(user=user, question=question)
+
+    if not like_obj.is_liked and not like_obj.is_disliked:
         if action == 'like':
-            # Проверяем, не добавлялся ли уже лайк
-            if not created:
-                return JsonResponse({'error': 'Already liked'}, status=400)
+            like_obj.is_liked = True
+            like_obj.is_disliked = False
         elif action == 'dislike':
-            # Удаляем лайк, если он был
-            like_obj.delete()
-        else:
-            return JsonResponse({'error': 'Invalid action'}, status=400)
+            like_obj.is_liked = False
+            like_obj.is_disliked = True
 
-        # Пересчитываем количество лайков
-        question.likes_count = question.likes.count()
-        question.save()
+    elif like_obj.is_liked and not like_obj.is_disliked:
+        if action == 'like':
+            like_obj.is_liked = False
+            like_obj.is_disliked = False
+        elif action == 'dislike':
+            like_obj.is_liked = False
+            like_obj.is_disliked = True
+    
+    elif not like_obj.is_liked and like_obj.is_disliked:
+        if action == 'like':
+            like_obj.is_liked = True
+            like_obj.is_disliked = False
+        elif action == 'dislike':
+            like_obj.is_liked = False
+            like_obj.is_disliked = False
 
-        return JsonResponse({'new_rating': question.likes_count}, status=200)
+    else:
+        like_obj.is_liked = False
+        like_obj.is_disliked = False
 
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
+    like_obj.save()
+    question.save()
+    likes_count = question.likes.filter(is_liked=True).count()
+    dislikes_count = question.likes.filter(is_disliked=True).count()
+    question.likes_count = likes_count - dislikes_count
+    question.save()
+
+    return JsonResponse({
+        'new_rating': likes_count - dislikes_count,
+        'is_liked': like_obj.is_liked,
+        'is_disliked': like_obj.is_disliked,
+    }, status=200)
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='login')
 def like_answer(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -283,40 +299,46 @@ def like_answer(request):
     user = request.user
     like_obj, created = AnswerLike.objects.get_or_create(user=user, answer=answer)
 
-    if not like_obj.is_like and not like_obj.is_dislike:
+    if not like_obj.is_liked and not like_obj.is_disliked:
         if action == 'like':
-            like_obj.is_like = True
-            like_obj.is_dislike = False
+            like_obj.is_liked = True
+            like_obj.is_disliked = False
         elif action == 'dislike':
-            like_obj.is_like = False
-            like_obj.is_dislike = True
+            like_obj.is_liked = False
+            like_obj.is_disliked = True
 
-    elif like_obj.is_like and not like_obj.is_dislike:
+    elif like_obj.is_liked and not like_obj.is_disliked:
         if action == 'like':
-            like_obj.is_like = False
-            like_obj.is_dislike = False
+            like_obj.is_liked = False
+            like_obj.is_disliked = False
         elif action == 'dislike':
-            like_obj.is_like = False
-            like_obj.is_dislike = True
+            like_obj.is_liked = False
+            like_obj.is_disliked = True
     
-    elif not like_obj.is_like and like_obj.is_dislike:
+    elif not like_obj.is_liked and like_obj.is_disliked:
         if action == 'like':
-            like_obj.is_like = True
-            like_obj.is_dislike = False
+            like_obj.is_liked = True
+            like_obj.is_disliked = False
         elif action == 'dislike':
-            like_obj.is_like = False
-            like_obj.is_dislike = False
+            like_obj.is_liked = False
+            like_obj.is_disliked = False
 
     else:
-        return JsonResponse({'error': 'Invalid action'}, status=400)
+        like_obj.is_liked = False
+        like_obj.is_disliked = False
 
     like_obj.save()
-    likes_count = answer.likes.filter(is_like=True).count()
-    dislikes_count = answer.likes.filter(is_dislike=True).count()
+    answer.save()
+    likes_count = answer.likes.filter(is_liked=True).count()
+    dislikes_count = answer.likes.filter(is_disliked=True).count()
     answer.likes_count = likes_count - dislikes_count
     answer.save()
 
-    return JsonResponse({'new_rating': answer.likes_count}, status=200)
+    return JsonResponse({
+        'new_rating': likes_count - dislikes_count,
+        'is_liked': like_obj.is_liked,
+        'is_disliked': like_obj.is_disliked,
+    }, status=200)
 
 
 @csrf_exempt

@@ -24,9 +24,9 @@ class Command(BaseCommand):
 
         ratio = options['ratio']
 
-        # if ratio < 10000:
-        #     self.stdout.write(self.style.ERROR('Ratio minimum = 10 000'))
-        #     return
+        if ratio < 10000:
+            self.stdout.write(self.style.ERROR('Ratio minimum = 10 000'))
+            return
 
         # cleaning db
         User.objects.all().delete()
@@ -98,7 +98,8 @@ class Command(BaseCommand):
             # Создаем лайк только если его еще нет для этого ответа и пользователя
             _, created = AnswerLike.objects.get_or_create(
                 user=random_user,
-                answer=answer
+                answer=answer,
+                is_liked=True
             )
 
             if created:
@@ -114,7 +115,8 @@ class Command(BaseCommand):
             # Создаем лайк только если его еще нет для этого вопроса и пользователя
             _, created = QuestionLike.objects.get_or_create(
                 user=random_user,
-                question=random_question
+                question=random_question,
+                is_liked=True
             )
 
             if created:

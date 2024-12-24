@@ -24,7 +24,7 @@
                     </div>
                 {% endif %}
                 
-                <form>
+                <form id="question-rating-{{ question.id }}">
                     <div class="w-40 flex justify-start items-center gap-2.5">
 
                         <input
@@ -33,14 +33,14 @@
 
                         <div class="flex gap-2.5 justify-end">
                             <!-- Like Button -->
-                            <button
-                                class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom">
+                            <button data-question-id="{{ question.id }}" data-action="like" data-url="{% url 'like_question' %}" data-csrf="{{ csrf_token }}"
+                                class="like-question-btn flex items-center space-x-2 {% if question.is_liked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
                                 <i class="fas fa-thumbs-up"></i>
                             </button>
 
                             <!-- Dislike Button -->
-                            <button
-                                class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom">
+                            <button data-question-id="{{ question.id }}" data-action="dislike" data-url="{% url 'like_question' %}" data-csrf="{{ csrf_token }}"
+                                class="dislike-question-btn flex items-center space-x-2 {% if question.is_disliked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
                                 <i class="fas fa-thumbs-down"></i>
                             </button>
                         </div>
@@ -112,3 +112,6 @@
 
     </div>
 {% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/question_ajax.js' %}"></script>

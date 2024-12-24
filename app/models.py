@@ -53,8 +53,8 @@ class QuestionLike(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_likes')
     created_at = models.DateTimeField(auto_now_add=True)
-    is_like = models.BooleanField(default=False)
-    is_dislike = models.BooleanField(default=False)
+    is_liked = models.BooleanField(default=False)
+    is_disliked = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'question')
@@ -64,8 +64,8 @@ class AnswerLike(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_likes')
     created_at = models.DateTimeField(auto_now_add=True)
-    is_like = models.BooleanField(default=False)
-    is_dislike = models.BooleanField(default=False)
+    is_liked = models.BooleanField(default=False)
+    is_disliked = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'answer')

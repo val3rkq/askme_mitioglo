@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="rounded-xl w-full py-2 px-3 flex gap-3 shadow-custom">
     <div class="flex flex-col justify-start items-start gap-3">
     {% if question.author.profile.avatar %}
@@ -7,17 +9,24 @@
         {{ question.author }}
       </div>
     {% endif %}
-    <form>
+
+    <form id="question-rating-{{ question.id }}">
         <div class="w-40 flex justify-start items-center gap-2.5">
         <input class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer" 
-            type="text" value="{{ question.likes_count }}" disabled id="question-rating-{{ question.id }}"/>
+            type="text" value="{{ question.likes_count }}" disabled/>
 
         <div class="flex gap-2.5 justify-end">
             <!-- Like Button -->
-            <button data-answer-id="{{ answer.id }}" class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom"><i class="fas fa-thumbs-up"></i></button>
+            <button data-question-id="{{ question.id }}" data-action="like" data-url="{% url 'like_question' %}" data-csrf="{{ csrf_token }}"
+                class="like-question-btn flex items-center space-x-2 {% if question.is_liked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
+                <i class="fas fa-thumbs-up"></i>
+            </button>
 
             <!-- Dislike Button -->
-            <button data-answer-id="{{ answer.id }}" class="flex items-center space-x-2 text-secondary hover:text-primary transition-custom"><i class="fas fa-thumbs-down"></i></button>
+            <button data-question-id="{{ question.id }}" data-action="dislike" data-url="{% url 'like_question' %}" data-csrf="{{ csrf_token }}"
+                class="dislike-question-btn flex items-center space-x-2 {% if question.is_disliked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
+                <i class="fas fa-thumbs-down"></i>
+            </button>
         </div>
         </div>
     </form>
@@ -44,29 +53,4 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).on('click', '.like-btn, .dislike-btn', function() {
-    const questionId = $(this).data('question-id');
-    const action = $(this).hasClass('like-btn') ? 'like' : 'dislike';
-
-    $.ajax({
-        url: '{% url "like_question" %}',
-        type: 'POST',
-        data: {
-            question_id: questionId,
-            action: action,
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function(response) {
-            if (response.new_rating !== undefined) {
-                $('#question-rating-' + questionId).text(response.new_rating);
-            } else {
-                alert('Error updating rating');
-            }
-        },
-        error: function(xhr) {
-            alert('An error occurred: ' + xhr.responseJSON.error);
-        }
-    });
-});
-</script>
+<script src="{% static 'js/question_ajax.js' %}"></script>
