@@ -3,9 +3,11 @@ from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from .forms import *
-from .models import Answer, Question, Tag, Profile
+from .models import Answer, Question, Tag, Profile, QuestionLike, AnswerLike
 
 # Главная страница - список новых вопросов
 def index(request):
@@ -32,7 +34,18 @@ def questions_by_tag(request, tag):
 @login_required
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-    answers = Answer.objects.filter(question=question).order_by('-likes_count', '-created_at')
+    answers = Answer.objects.filter(question=question).order_by('-created_at')
+
+    for answer in answers:
+        like_obj = AnswerLike.objects.filter(user=request.user, answer=answer).first()
+        
+        if like_obj:
+            answer.is_liked = like_obj.is_like
+            answer.is_disliked = like_obj.is_dislike
+        else:
+            answer.is_liked = False
+            answer.is_disliked = False
+
     page = paginate(answers, request)
 
     form = AnswerForm(request.POST or None)
@@ -96,6 +109,11 @@ def signup_view(request):
         if signup_form.is_valid():
             try:
                 user = signup_form.create_user()
+                profile = Profile(user=user, 
+                                  avatar=signup_form.cleaned_data.get('avatar', None), 
+                                  nickname = signup_form.cleaned_data['nickname'])
+                profile.save()
+                
                 login_field = signup_form.cleaned_data["login"]
                 password = signup_form.cleaned_data["password"]
                 user = authenticate(request, username=login_field, password=password)
@@ -137,10 +155,11 @@ def settings_view(request):
                 user.email = form.cleaned_data['email']
                 user.save()
 
+                profile.nickname = form.cleaned_data['nickname']                
                 # Обновление данных профиля
-                profile.nickname = form.cleaned_data['nickname']
-                # if 'avatar' in request.FILES:
-                #     profile.avatar = request.FILES['avatar']
+                if form.cleaned_data['avatar'] is not None:
+                    profile.avatar = form.cleaned_data.get('avatar', profile.avatar)
+                
                 profile.save()
 
                 return redirect('settings')
@@ -205,3 +224,123 @@ def paginate(objects_list, request, per_page=5):
         page = paginator.page(0)
 
     return page
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def like_question(request):
+    if request.method == 'POST':
+        question_id = request.POST.get('question_id')
+        action = request.POST.get('action')  # "like" или "dislike"
+
+        if not question_id or not action:
+            return JsonResponse({'error': 'Missing parameters'}, status=400)
+
+        try:
+            question = Question.objects.get(id=question_id)
+        except Question.DoesNotExist:
+            return JsonResponse({'error': 'Question not found'}, status=404)
+
+        user = request.user
+        like_obj, created = QuestionLike.objects.get_or_create(user=user, question=question)
+
+        if action == 'like':
+            # Проверяем, не добавлялся ли уже лайк
+            if not created:
+                return JsonResponse({'error': 'Already liked'}, status=400)
+        elif action == 'dislike':
+            # Удаляем лайк, если он был
+            like_obj.delete()
+        else:
+            return JsonResponse({'error': 'Invalid action'}, status=400)
+
+        # Пересчитываем количество лайков
+        question.likes_count = question.likes.count()
+        question.save()
+
+        return JsonResponse({'new_rating': question.likes_count}, status=200)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+@csrf_exempt
+@login_required
+def like_answer(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    answer_id = request.POST.get('answer_id')
+    action = request.POST.get('action')  # "like" or "dislike"
+
+    if not answer_id or not action:
+        return JsonResponse({'error': 'Missing parameters'}, status=400)
+
+    try:
+        answer = Answer.objects.get(id=answer_id)
+    except Answer.DoesNotExist:
+        return JsonResponse({'error': 'Answer not found'}, status=404)
+
+    user = request.user
+    like_obj, created = AnswerLike.objects.get_or_create(user=user, answer=answer)
+
+    if not like_obj.is_like and not like_obj.is_dislike:
+        if action == 'like':
+            like_obj.is_like = True
+            like_obj.is_dislike = False
+        elif action == 'dislike':
+            like_obj.is_like = False
+            like_obj.is_dislike = True
+
+    elif like_obj.is_like and not like_obj.is_dislike:
+        if action == 'like':
+            like_obj.is_like = False
+            like_obj.is_dislike = False
+        elif action == 'dislike':
+            like_obj.is_like = False
+            like_obj.is_dislike = True
+    
+    elif not like_obj.is_like and like_obj.is_dislike:
+        if action == 'like':
+            like_obj.is_like = True
+            like_obj.is_dislike = False
+        elif action == 'dislike':
+            like_obj.is_like = False
+            like_obj.is_dislike = False
+
+    else:
+        return JsonResponse({'error': 'Invalid action'}, status=400)
+
+    like_obj.save()
+    likes_count = answer.likes.filter(is_like=True).count()
+    dislikes_count = answer.likes.filter(is_dislike=True).count()
+    answer.likes_count = likes_count - dislikes_count
+    answer.save()
+
+    return JsonResponse({'new_rating': answer.likes_count}, status=200)
+
+
+@csrf_exempt
+@login_required
+def mark_correct_answer(request):
+    if request.method == 'POST':
+        answer_id = request.POST.get('answer_id')
+        question_id = request.POST.get('question_id')
+        is_correct = request.POST.get('is_correct') == 'true'
+
+        try:
+            answer = Answer.objects.get(id=answer_id)
+            question = Question.objects.get(id=question_id)
+
+            # Проверка, что только автор вопроса может изменять правильный ответ
+            if question.author != request.user:
+                return JsonResponse({'status': 'error', 'message': 'Вы не автор вопроса!'}, status=403)
+
+            answer.is_correct = is_correct
+            answer.save()
+
+            return JsonResponse({'status': 'success'}, status=200)
+
+        except (Answer.DoesNotExist, Question.DoesNotExist):
+            return JsonResponse({'status': 'error', 'message': 'Неверный ответ или вопрос!'}, status=404)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method!'}, status=405)

@@ -1,7 +1,13 @@
 {% if request.user.is_authenticated %}
     <!-- authorized -->
     <div class="flex justify-between items-center gap-2.5">
-        <div class="bg-black rounded-full w-10 h-10 text-selected flex items-center justify-center cursor-pointer">PN</div>
+        <div class="bg-black rounded-full w-10 h-10 text-selected flex items-center justify-center cursor-pointer">
+            {% if request.user.profile.avatar %}
+                <img src="{{ request.user.profile.avatar.url }}" alt="Avatar" class="w-10 h-10 rounded-full" />
+            {% else %}
+                <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">AV</div>
+            {% endif %}
+        </div>
         <div class="flex flex-col items-left justify-between">
         <div class="cursor-pointer text-sm text-black translate-x-0 hover:translate-x-1 transition-custom">{{ request.user.username }}</div>
         <div class="flex w-120px gap-2.5">

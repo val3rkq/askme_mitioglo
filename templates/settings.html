@@ -25,14 +25,14 @@
         class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
         type="text" name="nickname" placeholder="NickName" value="{{ form.nickname.value|default_if_none:'' }}">
 
-    <div class="mt-5 w-full flex justify-start gap-2.5">
-        <div
-            class="w-10 h-10 flex items-center justify-center text-selected rounded-full bg-primary p-2 transition-custom cursor-pointer">
-            AV
-        </div>
-        <button
-            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-            type="button">Upload Avatar</button>
+    <div class="mt-2 w-full flex justify-start gap-2.5">
+        
+        {% if request.user.profile.avatar %} 
+          <img height="50" width="48" class="rounded-full" src="{{ MEDIA_URL }}{{ request.user.profile.avatar.url|default_if_none:'' }}">
+        {% endif %}
+        <input type="file" name="avatar" id="id_avatar" accept=".jpg,.png,.jpeg" 
+            class="h-[50px] rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"/>
+        
     </div>
 
     <!-- error text -->

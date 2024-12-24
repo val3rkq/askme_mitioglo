@@ -1,8 +1,13 @@
 import random
+import os
 import string
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from app.models import AnswerLike, Question, Answer, QuestionLike, Tag
+from app.models import AnswerLike, Question, Answer, QuestionLike, Tag, Profile
+from django.core.files import File
+
+
+AVATAR_PATH = os.path.join('media', "avatars/image.png")
 
 
 def generate_unique_username():
@@ -16,11 +21,12 @@ class Command(BaseCommand):
         parser.add_argument('ratio', type=int, help='Scaling factor for data generation')
 
     def handle(self, *args, **options):
+
         ratio = options['ratio']
 
-        if ratio < 10000:
-            self.stdout.write(self.style.ERROR('Ratio minimum = 10 000'))
-            return
+        # if ratio < 10000:
+        #     self.stdout.write(self.style.ERROR('Ratio minimum = 10 000'))
+        #     return
 
         # cleaning db
         User.objects.all().delete()
@@ -31,11 +37,22 @@ class Command(BaseCommand):
         Tag.objects.all().delete()
 
         # Генерация пользователей
-        users = [User.objects.create_user(
-            username=generate_unique_username(),
-            email=f'email_{i}@mail.ru',
-            password='password'
-        ) for i in range(ratio)]
+        users = []
+        for i in range(ratio):
+            user = User.objects.create_user(
+                username=generate_unique_username(),
+                email=f'email_{i}@mail.ru',
+                password='password'
+            )
+
+            # Create a profile with the default avatar
+            with open(AVATAR_PATH, 'rb') as avatar_file:
+                profile = Profile.objects.create(
+                    user=user,
+                    nickname=f'Nickname_{i}',
+                    avatar=File(avatar_file, name=f'avatar_{i}.jpg')
+                )
+            users.append(user)
 
         # Генерация тегов
         tags = [Tag.objects.create(name=f'tag_{i}') for i in range(ratio)]

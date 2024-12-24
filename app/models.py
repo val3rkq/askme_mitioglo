@@ -22,7 +22,7 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes_count = models.PositiveIntegerField(default=0)
+    likes_count = models.IntegerField(default=0)
     answers_count = models.PositiveIntegerField(default=0)
 
     # Define a custom model manager for common queries
@@ -45,13 +45,16 @@ class Answer(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes_count = models.PositiveIntegerField(default=0)
+    likes_count = models.IntegerField(default=0)
+    is_correct = models.BooleanField(default=False)
 
 
 class QuestionLike(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_likes')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_like = models.BooleanField(default=False)
+    is_dislike = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'question')
@@ -61,6 +64,8 @@ class AnswerLike(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_likes')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_like = models.BooleanField(default=False)
+    is_dislike = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'answer')

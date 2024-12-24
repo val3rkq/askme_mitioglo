@@ -14,7 +14,7 @@ class SignUpForm(forms.Form):
     password = forms.CharField(max_length=16, widget=forms.PasswordInput, label="Пароль")
     confirm_password = forms.CharField(max_length=16, widget=forms.PasswordInput, label="Подтверждение пароля")
     avatar = forms.ImageField(required=False, label="Аватар")
-    
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
@@ -22,7 +22,6 @@ class SignUpForm(forms.Form):
         if password != confirm_password:
             self.add_error("confirm_password", "Пароли не совпадают!")
         return cleaned_data
-
 
     def create_user(self):
         user = User.objects.create_user(
@@ -32,7 +31,7 @@ class SignUpForm(forms.Form):
         )
         user.first_name = self.cleaned_data.get('nickname', '')
         user.save()
-        return user      
+        return user
 
 
 class SettingsForm(forms.Form):

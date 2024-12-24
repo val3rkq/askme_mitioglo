@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data"
+<form id="avatar-form" action="{% url 'signup' %}" method="POST" enctype="multipart/form-data"
     class="flex flex-1 flex-col h-full w-full max-w-[800px] justify-center items-center gap-3.5 md:w-[80%]">
     
     {% csrf_token %}
@@ -34,14 +34,10 @@
         class="w-full text-md outline-none focus:outline-none border focus:border-secondary p-3 rounded-lg transition-custom hover:outline hover:border-secondary"
         type="password" name="confirm_password" placeholder="Repeat Password">
 
-    <div class="mt-5 w-full flex justify-start gap-2.5">
-        <div
-            class="w-10 h-10 flex items-center justify-center text-selected rounded-full bg-primary p-2 transition-custom cursor-pointer">
-            AV
-        </div>
-        <button
-            class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"
-            type="button">Upload Avatar</button>
+    <div class="mt-2 w-full flex justify-start gap-2.5">
+        
+        <input type="file" name="avatar" id="id_avatar" accept=".jpg,.png,.jpeg" class="rounded-md py-2 px-4 transition-custom bg-selected border border-primary hover:bg-primary hover:text-selected"/>
+        
     </div>
 
     <!-- error text -->

@@ -9,3 +9,5 @@ env/
 *.pyc
 
 app/migrations/
+
+media/
