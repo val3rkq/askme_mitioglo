@@ -143,7 +143,3 @@ If you'd like to contribute, feel free to submit a pull request. For major chang
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-This updated README should provide all necessary instructions to set up and contribute to the Django and PostgreSQL backend for the AskMe App.
