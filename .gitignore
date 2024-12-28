@@ -4,6 +4,7 @@ node_modules/
 
 static/img/
 static/*.css
+media/
 
 env/
 .venv/
