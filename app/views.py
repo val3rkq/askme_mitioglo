@@ -141,20 +141,24 @@ def settings_view(request):
         form = SettingsForm(request.POST, request.FILES)
         if form.is_valid():
             try:
-                # Обновление данных пользователя
-                user.username = form.cleaned_data['login']
-                user.email = form.cleaned_data['email']
-                user.save()
+                if User.objects.filter(username=form.cleaned_data['login']).exists():
+                    messages.error(request, 'Пользователь с таким логином уже существует!')
+                else:
+                    # Обновление данных пользователя
+                    user.username = form.cleaned_data['login']
+                    user.email = form.cleaned_data['email']
+                    user.save()
 
-                # Обновление данных профиля
-                profile.nickname = form.cleaned_data['nickname']
-                # if 'avatar' in request.FILES:
-                #     profile.avatar = request.FILES['avatar']
-                profile.save()
+                    profile.nickname = form.cleaned_data['nickname']                
+                    # Обновление данных профиля
+                    if form.cleaned_data['avatar'] is not None:
+                        profile.avatar = form.cleaned_data.get('avatar', profile.avatar)
+                    
+                    profile.save()
 
-                return redirect('settings')
+                    return redirect('settings')
             except Exception as e:
-                messages.error(request, 'Ошибка при обновлении настроек!')
+                messages.error(request, f'Ошибка при обновлении настроек! {e}')
         else:
             messages.error(request, 'Проверьте правильность введенных данных.')
     else:
