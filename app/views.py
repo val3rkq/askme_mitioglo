@@ -95,24 +95,27 @@ def signup_view(request):
     if request.method == 'POST':
         if signup_form.is_valid():
             try:
-                user = signup_form.create_user()
-                
-                profile = Profile(user=user, 
-                                  nickname = signup_form.cleaned_data['nickname'])
-                # profile.avatar=signup_form.cleaned_data.get('avatar', None), 
-                profile.save()
-                
-                login_field = signup_form.cleaned_data["login"]
-                password = signup_form.cleaned_data["password"]
-                user = authenticate(request, username=login_field, password=password)
-                if user is not None:
-                    login(request, user)
-                    continue_url = request.GET.get('continue', '/')
-                    return redirect(continue_url)
+                if User.objects.filter(username=signup_form.cleaned_data['login']).exists():
+                    messages.error(request, 'Пользователь с таким логином уже существует!')
                 else:
-                    messages.error(request, 'Ошибка аутентификации после регистрации!')
+                    user = signup_form.create_user()
+                    
+                    profile = Profile(user=user, 
+                                    nickname = signup_form.cleaned_data['nickname'])
+                    # profile.avatar=signup_form.cleaned_data.get('avatar', None), 
+                    profile.save()
+                    
+                    login_field = signup_form.cleaned_data["login"]
+                    password = signup_form.cleaned_data["password"]
+                    user = authenticate(request, username=login_field, password=password)
+                    if user is not None:
+                        login(request, user)
+                        continue_url = request.GET.get('continue', '/')
+                        return redirect(continue_url)
+                    else:
+                        messages.error(request, 'Ошибка аутентификации после регистрации!')
             except Exception as e:
-                messages.error(request, 'Ошибка при создании пользователя!')
+                messages.error(request, f'Ошибка при создании пользователя! {e}')
         else:
             messages.error(request, 'Проверьте правильность введенных данных!')
 
