@@ -105,8 +105,8 @@ def signup_view(request):
                     user = signup_form.create_user()
                     
                     profile = Profile(user=user, 
-                                    nickname = signup_form.cleaned_data['nickname'])
-                    # profile.avatar=signup_form.cleaned_data.get('avatar', None), 
+                                    nickname = signup_form.cleaned_data['nickname'], 
+                                    avatar = signup_form.cleaned_data.get('avatar', None))
                     profile.save()
                     
                     login_field = signup_form.cleaned_data["login"]
@@ -145,11 +145,13 @@ def settings_view(request):
         form = SettingsForm(request.POST, request.FILES)
         if form.is_valid():
             try:
-                if User.objects.filter(username=form.cleaned_data['login']).exists():
-                    messages.error(request, 'Пользователь с таким логином уже существует!')
+                # Проверка уникальности логина
+                new_login = form.cleaned_data['login']
+                if User.objects.filter(username=new_login).exclude(id=user.id).exists():
+                    messages.error(request, 'Этот логин уже используется другим пользователем.')
                 else:
                     # Обновление данных пользователя
-                    user.username = form.cleaned_data['login']
+                    user.username = new_login
                     user.email = form.cleaned_data['email']
                     user.save()
 
@@ -157,7 +159,7 @@ def settings_view(request):
                     # Обновление данных профиля
                     if form.cleaned_data['avatar'] is not None:
                         profile.avatar = form.cleaned_data.get('avatar', profile.avatar)
-                    
+
                     profile.save()
 
                     return redirect('settings')
