@@ -13,3 +13,6 @@ env/
 app/migrations/
 
 media/
+
+logs/
+temp/
