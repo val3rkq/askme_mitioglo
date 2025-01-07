@@ -25,6 +25,12 @@ class Question(models.Model):
     likes_count = models.IntegerField(default=0)
     answers_count = models.PositiveIntegerField(default=0)
 
+    def is_liked_by(self, user):
+        return self.likes.filter(user=user, is_liked=True).exists()
+
+    def is_disliked_by(self, user):
+        return self.likes.filter(user=user, is_disliked=True).exists()
+    
     # Define a custom model manager for common queries
     class QuestionManager(models.Manager):
         def new(self):
@@ -47,6 +53,12 @@ class Answer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     likes_count = models.IntegerField(default=0)
     is_correct = models.BooleanField(default=False)
+
+    def is_liked_by(self, user):
+        return self.likes.filter(user=user, is_liked=True).exists()
+
+    def is_disliked_by(self, user):
+        return self.likes.filter(user=user, is_disliked=True).exists()
 
 
 class QuestionLike(models.Model):

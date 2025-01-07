@@ -12,23 +12,49 @@ from .models import Answer, Question, Tag, Profile, QuestionLike, AnswerLike
 # Главная страница - список новых вопросов
 def index(request):
     questions = Question.objects.new()
-
     page = paginate(questions, request)
-    return render(request, 'index.html', {'questions': page, 'is_hot_questions': False})
+
+    question_likes = {
+        like.question.id: like for like in QuestionLike.objects.filter(user=request.user, question__in=questions)
+    }
+
+    return render(request, 'index.html', {
+        'questions': page, 
+        'is_hot_questions': False, 
+        'question_likes': question_likes
+    })
 
 
 # Список "популярных" вопросов
 def hot_questions(request):
     questions = Question.objects.hot()
     page = paginate(questions, request)
-    return render(request, 'index.html', {'questions': page, 'is_hot_questions': True})
+
+    question_likes = {
+        like.question.id: like for like in QuestionLike.objects.filter(user=request.user, question__in=questions)
+    }
+
+    return render(request, 'index.html', {
+        'questions': page, 
+        'is_hot_questions': True, 
+        'question_likes': question_likes
+    })
 
 
 # Список вопросов по тэгу
 def questions_by_tag(request, tag):
     questions = Question.objects.by_tag(tag)
     page = paginate(questions, request)
-    return render(request, 'tag.html', {'questions': page, 'tag': tag})
+    
+    question_likes = {
+        like.question.id: like for like in QuestionLike.objects.filter(user=request.user, question__in=questions)
+    }
+
+    return render(request, 'tag.html', {
+        'questions': page, 
+        'tag': tag,
+        'question_likes': question_likes
+    })
 
 
 # Страница одного вопроса с ответами
@@ -38,6 +64,11 @@ def question_detail(request, question_id):
     answers = Answer.objects.filter(question=question).order_by('-created_at')
 
     page = paginate(answers, request)
+
+    question_like = QuestionLike.objects.filter(user=request.user, question=question).first()
+    answer_likes = {
+        like.answer.id: like for like in AnswerLike.objects.filter(user=request.user, answer__in=answers)
+    }
 
     form = AnswerForm(request.POST or None)
 
@@ -63,7 +94,9 @@ def question_detail(request, question_id):
     return render(request, 'question.html', {
         'answers': page,
         'question': question,
-        'form': form
+        'form': form,
+        'question_like': question_like,
+        'answer_likes': answer_likes
     })
 
 
@@ -275,7 +308,6 @@ def like_question(request):
         like_obj.is_disliked = False
 
     like_obj.save()
-    question.save()
     likes_count = question.likes.filter(is_liked=True).count()
     dislikes_count = question.likes.filter(is_disliked=True).count()
     question.likes_count = likes_count - dislikes_count
@@ -337,7 +369,6 @@ def like_answer(request):
         like_obj.is_disliked = False
 
     like_obj.save()
-    answer.save()
     likes_count = answer.likes.filter(is_liked=True).count()
     dislikes_count = answer.likes.filter(is_disliked=True).count()
     answer.likes_count = likes_count - dislikes_count

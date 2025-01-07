@@ -1,3 +1,4 @@
+{% load custom_filters %}
 {% load static %}
 
 <div class="rounded-xl w-full py-2 px-3 flex gap-5 shadow-custom">
@@ -10,25 +11,27 @@
             </div>
         {% endif %}
         
-        <form id="answer-rating-{{ answer.id }}">
+        <form>
             <div class="w-20 flex justify-between items-center gap-2.5">
-                <input
-                    class="text-sm w-10 outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary p-2 rounded-lg transition-custom text-center cursor-pointer"
-                    type="text" value="{{ answer.likes_count }}" disabled>
-                <div class="flex gap-2.5 justify-end">
-                    <!-- Like Button -->
-                    <button data-answer-id="{{ answer.id }}" data-action="like" data-url="{% url 'like_answer' %}" data-csrf="{{ csrf_token }}"
-                        class="like-answer-btn flex items-center space-x-2 {% if answer.is_liked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
-                        <i class="fas fa-thumbs-up"></i>
-                    </button>
+                <span id="answer-rating-{{ answer.id }}" 
+                    class="text-sm outline-none border hover:outline hover:border-secondary focus:outline-none focus:border-secondary py-2 px-3 rounded-lg transition-custom text-center cursor-pointer">
+                    {{ answer.likes_count }}
+                </span>
+                {% with answer_likes|get_item:answer.id as answer_like %}
+                    <div class="flex gap-2.5 justify-end">
+                        <!-- Like Button -->
+                        <button type="button" data-answer-id="{{ answer.id }}" data-action="like" data-url="{% url 'like_answer' %}" data-csrf="{{ csrf_token }}"
+                            class="like-answer-btn flex items-center space-x-2 {% if answer_like.is_liked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
 
-                    <!-- Dislike Button -->
-                    <button data-answer-id="{{ answer.id }}" data-action="dislike" data-url="{% url 'like_answer' %}" data-csrf="{{ csrf_token }}"
-                        class="dislike-answer-btn flex items-center space-x-2 {% if answer.is_disliked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
-                        <i class="fas fa-thumbs-down"></i>
-                    </button>
-                    
-                </div>
+                        <!-- Dislike Button -->
+                        <button type="button" data-answer-id="{{ answer.id }}" data-action="dislike" data-url="{% url 'like_answer' %}" data-csrf="{{ csrf_token }}"
+                            class="dislike-answer-btn flex items-center space-x-2 {% if answer_like.is_disliked %}text-primary{% else %}text-secondary{% endif %} hover:text-primary transition-custom">
+                            <i class="fas fa-thumbs-down"></i>
+                        </button>
+                    </div>
+                {% endwith %}
             </div>
         </form>
     </div>
@@ -57,6 +60,3 @@
 
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/answer_ajax.js' %}"></script>
